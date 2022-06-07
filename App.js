@@ -2,8 +2,22 @@ import { StatusBar } from "expo-status-bar"
 import { StyleSheet, ImageBackground } from "react-native"
 import StartScreen from "./screens/StartScreen"
 import { LinearGradient } from "expo-linear-gradient"
+import { useState } from "react"
+import GameScreen from "./screens/GameScreen"
 
 export default function App() {
+  const [userNumber, setUserNumber] = useState()
+
+  function pickedNumber(pickedNumber) {
+    setUserNumber(pickedNumber)
+  }
+
+  let screen = <StartScreen pickedNumber={pickedNumber} />
+
+  if (userNumber) {
+    screen = <GameScreen />
+  }
+
   return (
     <>
       <StatusBar style='light' />
@@ -14,7 +28,7 @@ export default function App() {
           style={styles.container}
           imageStyle={styles.bgImage}
         >
-          <StartScreen />
+          {screen}
         </ImageBackground>
       </LinearGradient>
     </>
@@ -29,6 +43,6 @@ const styles = StyleSheet.create({
     // justifyContent: "center",r
   },
   bgImage: {
-    opacity: 0.05,
+    opacity: 0.1,
   },
 })
